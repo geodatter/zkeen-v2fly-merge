@@ -1,0 +1,105 @@
+{
+  "geosite": {
+    "zkeen_imports": [
+      "domains",
+      "other",
+      "politic",
+      "youtube"
+    ],
+    "curated": {
+      "merged-bypass": {
+        "description": "Direct-connect categories for RU banking and commerce destinations.",
+        "sources": [
+          "category-bank-ru",
+          "category-ru",
+          "category-ecommerce-ru"
+        ]
+      },
+      "merged-ai": {
+        "description": "AI access categories used as part of the broader proxy policy.",
+        "sources": [
+          "category-ai-chat-!cn",
+          "category-ai-!cn"
+        ]
+      },
+      "merged-media": {
+        "description": "Media and content categories frequently proxied by policy.",
+        "sources": [
+          "zkeen-youtube",
+          "spotify",
+          "netflix",
+          "habr"
+        ]
+      },
+      "merged-social": {
+        "description": "Common social and messaging providers.",
+        "sources": [
+          "facebook",
+          "twitter",
+          "telegram",
+          "instagram",
+          "discord",
+          "whatsapp"
+        ]
+      },
+      "merged-zkeen": {
+        "description": "Primary imported zkeen geosite categories.",
+        "sources": [
+          "zkeen-domains",
+          "zkeen-other",
+          "zkeen-politic",
+          "zkeen-youtube"
+        ]
+      },
+      "merged-proxy": {
+        "description": "Canonical curated proxy category for Happ and downstream configs.",
+        "sources": [
+          "zkeen-domains",
+          "zkeen-other",
+          "zkeen-politic",
+          "zkeen-youtube",
+          "facebook",
+          "twitter",
+          "telegram",
+          "instagram",
+          "discord",
+          "whatsapp",
+          "spotify",
+          "netflix",
+          "habr",
+          "category-anticensorship",
+          "category-ai-chat-!cn",
+          "category-ai-!cn"
+        ]
+      }
+    }
+  },
+  "geoip": {
+    "zkeen_imports": [
+      "discord",
+      "meta",
+      "youtube",
+      "telegram"
+    ],
+    "curated": {
+      "merged-zkeen-ip": {
+        "description": "Imported zkeen IP-backed services.",
+        "sources": [
+          "zkeen-discord",
+          "zkeen-meta",
+          "zkeen-youtube",
+          "zkeen-telegram"
+        ]
+      },
+      "merged-proxy-ip": {
+        "description": "Canonical curated proxy geoip category for Happ and downstream configs.",
+        "sources": [
+          "zkeen-discord",
+          "zkeen-meta",
+          "zkeen-youtube",
+          "zkeen-telegram"
+        ]
+      }
+    }
+  }
+}

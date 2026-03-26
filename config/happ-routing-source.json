@@ -1,0 +1,35 @@
+{
+  "name": "Keenetic Xray import",
+  "globalProxy": false,
+  "remoteDnsType": "DoH",
+  "remoteDnsDomain": "https://cloudflare-dns.com/dns-query",
+  "remoteDnsIp": "1.1.1.1",
+  "domesticDnsType": "DoH",
+  "domesticDnsDomain": "https://dns.google/dns-query",
+  "domesticDnsIp": "8.8.8.8",
+  "dnsHosts": {
+    "cloudflare-dns.com": "1.1.1.1",
+    "dns.google": "8.8.8.8"
+  },
+  "directSites": [
+    "geosite:merged-bypass"
+  ],
+  "directIp": [
+    "127.0.0.0/8",
+    "10.0.0.0/8",
+    "172.16.0.0/12",
+    "192.168.0.0/16",
+    "169.254.0.0/16"
+  ],
+  "proxySites": [
+    "geosite:merged-proxy"
+  ],
+  "proxyIp": [
+    "geoip:merged-proxy-ip"
+  ],
+  "blockSites": [],
+  "blockIp": [],
+  "domainStrategy": "AsIs",
+  "fakeDns": false,
+  "useChunkFiles": true
+}
