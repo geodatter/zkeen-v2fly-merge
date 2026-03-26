@@ -1,0 +1,131 @@
+name: Build And Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Resolve upstream state
+        id: upstream
+        run: python3 scripts/build.py --repo "${{ github.repository }}" --print-upstream-state > upstream-state.json
+
+      - name: Check if scheduled release can be skipped
+        id: skipcheck
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+          import urllib.error
+          import urllib.request
+
+          upstream = json.load(open("upstream-state.json", "r", encoding="utf-8"))
+          event_name = os.environ["GITHUB_EVENT_NAME"]
+          output = os.environ["GITHUB_OUTPUT"]
+
+          def set_output(name: str, value: str) -> None:
+              with open(output, "a", encoding="utf-8") as fh:
+                  fh.write(f"{name}={value}\n")
+
+          if event_name != "schedule":
+              set_output("should_build", "true")
+              sys.exit(0)
+
+          token = os.environ["GITHUB_TOKEN"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          headers = {
+              "Accept": "application/vnd.github+json",
+              "Authorization": f"Bearer {token}",
+              "User-Agent": "zkeen-v2fly-merge",
+          }
+
+          latest_req = urllib.request.Request(
+              f"https://api.github.com/repos/{repo}/releases/latest",
+              headers=headers,
+          )
+          try:
+              with urllib.request.urlopen(latest_req) as response:
+                  latest_release = json.load(response)
+          except urllib.error.HTTPError as exc:
+              if exc.code == 404:
+                  set_output("should_build", "true")
+                  sys.exit(0)
+              raise
+
+          build_info_asset = None
+          for asset in latest_release.get("assets", []):
+              if asset.get("name") == "build-info.json":
+                  build_info_asset = asset
+                  break
+
+          if not build_info_asset:
+              set_output("should_build", "true")
+              sys.exit(0)
+
+          asset_req = urllib.request.Request(
+              build_info_asset["url"],
+              headers={
+                  "Accept": "application/octet-stream",
+                  "Authorization": f"Bearer {token}",
+                  "User-Agent": "zkeen-v2fly-merge",
+              },
+          )
+          with urllib.request.urlopen(asset_req) as response:
+              previous = json.load(response)
+
+          if previous.get("upstream_state") == upstream:
+              set_output("should_build", "false")
+          else:
+              set_output("should_build", "true")
+          PY
+
+      - name: Build merged artifacts
+        if: steps.skipcheck.outputs.should_build == 'true'
+        run: python3 scripts/build.py --repo "${{ github.repository }}"
+
+      - name: Compute tag
+        if: steps.skipcheck.outputs.should_build == 'true'
+        id: tag
+        run: echo "value=generated-$(date -u +%Y%m%d-%H%M%S)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload workflow artifact
+        if: steps.skipcheck.outputs.should_build == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: zkeen-v2fly-merge
+          path: dist/**
+
+      - name: Publish release
+        if: steps.skipcheck.outputs.should_build == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.value }}
+          name: ${{ steps.tag.outputs.value }}
+          files: dist/**
+
+      - name: Skip note
+        if: steps.skipcheck.outputs.should_build != 'true'
+        run: echo "Scheduled run skipped because upstream zkeen and v2fly release tags match the latest published build-info.json."
