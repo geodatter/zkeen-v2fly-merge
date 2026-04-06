@@ -20,7 +20,8 @@
         "sources": [
           "category-ai-chat-!cn",
           "category-ai-!cn",
-          "apple-ai-bridge"
+          "apple-ai-bridge",
+          "apple-chatgpt-login"
         ]
       },
       "merged-media": {
@@ -56,6 +57,7 @@
         "description": "Canonical curated proxy category for Happ and downstream configs.",
         "sources": [
           "apple-ai-bridge",
+          "apple-chatgpt-login",
           "zkeen-domains",
           "zkeen-other",
           "zkeen-politic",
