@@ -20,6 +20,7 @@ DOWNLOADS = WORK / "downloads"
 CONFIG_DIR = ROOT / "config"
 ROUTING_CONFIG = CONFIG_DIR / "happ-routing-source.json"
 CATEGORY_CONFIG = CONFIG_DIR / "categories.json"
+LOCAL_GEOSITE_DIR = CONFIG_DIR / "geosite"
 GOLDEN_HAPP = ROOT / "tests" / "golden" / "happ-routing.json"
 
 DIST_PLAIN = DIST / "plain"
@@ -187,6 +188,10 @@ def build_geosite_sources(
     if geosite_data.exists():
         shutil.rmtree(geosite_data)
     shutil.copytree(dlc_dir / "data", geosite_data)
+    if LOCAL_GEOSITE_DIR.exists():
+        for src in sorted(LOCAL_GEOSITE_DIR.iterdir()):
+            if src.is_file():
+                shutil.copyfile(src, geosite_data / src.name)
 
     run(
         "go",
