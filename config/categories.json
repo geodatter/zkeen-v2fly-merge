@@ -71,6 +71,12 @@
           "category-ai-chat-!cn",
           "category-ai-!cn"
         ]
+      },
+      "merged-blocked": {
+        "description": "Small curated blocklist for residual ad and tracker domains.",
+        "sources": [
+          "residual-ads"
+        ]
       }
     }
   },
