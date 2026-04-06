@@ -19,8 +19,7 @@
         "description": "AI access categories used as part of the broader proxy policy.",
         "sources": [
           "category-ai-chat-!cn",
-          "category-ai-!cn",
-          "apple-ai-bridge"
+          "category-ai-!cn"
         ]
       },
       "merged-media": {
@@ -55,7 +54,6 @@
       "merged-proxy": {
         "description": "Canonical curated proxy category for Happ and downstream configs.",
         "sources": [
-          "apple-ai-bridge",
           "zkeen-domains",
           "zkeen-other",
           "zkeen-politic",
