@@ -28,6 +28,7 @@ Downstream consumers can use either raw names or canonical `merged-*` names. The
 - All upstream `v2fly` geoip lists are kept as-is.
 - All upstream `zkeen.dat` lists are imported under the `zkeen-` prefix.
 - All upstream `zkeenip.dat` lists are imported under the `zkeen-` prefix.
+- Repo-owned fallback geoip sources under [`config/geoip/`](./config/geoip/) are merged before curated categories and can backfill missing upstream `zkeen` lists.
 - Curated `merged-*` categories are assembled from repo-tracked manifests in [`config/categories.json`](./config/categories.json).
 
 ## Generated Happ routing
