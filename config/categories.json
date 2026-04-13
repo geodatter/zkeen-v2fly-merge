@@ -55,6 +55,7 @@
         "description": "Canonical curated proxy category for Happ and downstream configs.",
         "sources": [
           "zkeen-domains",
+          "kinopub-extra",
           "zkeen-other",
           "zkeen-politic",
           "zkeen-youtube",
