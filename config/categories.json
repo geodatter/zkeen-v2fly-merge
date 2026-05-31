@@ -84,6 +84,9 @@
   "geoip": {
     "zkeen_imports": [
       "discord",
+      "akamai",
+      "cloudflare",
+      "linode",
       "meta",
       "youtube",
       "telegram"
@@ -101,6 +104,9 @@
       "merged-proxy-ip": {
         "description": "Canonical curated proxy geoip category for Happ and downstream configs.",
         "sources": [
+          "zkeen-akamai",
+          "zkeen-cloudflare",
+          "zkeen-linode",
           "zkeen-discord",
           "zkeen-meta",
           "zkeen-youtube",
