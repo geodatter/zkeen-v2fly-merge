@@ -19,6 +19,7 @@ DIST = ROOT / "dist"
 DOWNLOADS = WORK / "downloads"
 CONFIG_DIR = ROOT / "config"
 CUSTOM_GEOSITE_DIR = CONFIG_DIR / "geosite"
+CUSTOM_GEOIP_DIR = CONFIG_DIR / "geoip"
 ROUTING_CONFIG = CONFIG_DIR / "happ-routing-source.json"
 CATEGORY_CONFIG = CONFIG_DIR / "categories.json"
 GOLDEN_HAPP = ROOT / "tests" / "golden" / "happ-routing.json"
@@ -348,6 +349,14 @@ def build_geoip_sources(
         prefixed_name = f"zkeen-{name}"
         raw_geoip_lists[prefixed_name] = lines
         write_text_lines(merged_geoip_text_dir / f"{prefixed_name}.txt", lines)
+
+    if CUSTOM_GEOIP_DIR.exists():
+        for src in sorted(CUSTOM_GEOIP_DIR.iterdir()):
+            if not src.is_file():
+                continue
+            lines = normalize_rules(read_nonempty_lines(src))
+            raw_geoip_lists[src.stem] = lines
+            write_text_lines(merged_geoip_text_dir / f"{src.stem}.txt", lines)
 
     available_geoip_sources = {
         path.stem

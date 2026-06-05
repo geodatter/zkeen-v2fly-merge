@@ -110,7 +110,8 @@
           "zkeen-discord",
           "zkeen-meta",
           "zkeen-youtube",
-          "zkeen-telegram"
+          "zkeen-telegram",
+          "telegram-ipv6"
         ]
       }
     }
