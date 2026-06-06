@@ -55,7 +55,6 @@
         "description": "Canonical curated proxy category for Happ and downstream configs.",
         "sources": [
           "zkeen-domains",
-          "kinopub-extra",
           "zkeen-other",
           "zkeen-politic",
           "zkeen-youtube",
@@ -111,7 +110,10 @@
           "zkeen-meta",
           "zkeen-youtube",
           "zkeen-telegram",
-          "telegram-ipv6"
+          "telegram-ipv6",
+          "openai-web-ipv6",
+          "chatgpt-web-ipv6",
+          "cloudflare-ipv6"
         ]
       }
     }
